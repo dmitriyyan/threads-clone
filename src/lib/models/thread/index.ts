@@ -5,10 +5,9 @@ import mongoose from 'mongoose';
 export type ThreadType = {
   _id: mongoose.Types.ObjectId;
   author: UserType;
-  children: ThreadType[];
+  children: ThreadDocumentType[];
   community?: CommunityType;
   createdAt: Date;
-  id: string;
   parentId?: string;
   text: string;
 };
@@ -19,12 +18,7 @@ type ThreadDTO = {
     image?: string;
     name: string;
   };
-  children: Array<{
-    author: {
-      image?: string;
-    };
-    id: string;
-  }>;
+  children: ThreadDTO[];
   community?: {
     id: string;
     image?: string;
@@ -63,10 +57,6 @@ const ThreadSchema = new mongoose.Schema<ThreadType, ThreadModelType>({
     default: Date.now,
     type: Date,
   },
-  id: {
-    required: true,
-    type: String,
-  },
   parentId: {
     type: String,
   },
@@ -85,12 +75,7 @@ ThreadSchema.methods.toDTO = function (this: ThreadDocumentType): ThreadDTO {
       image: this.author.image,
       name: this.author.name,
     },
-    children: this.children.map((child) => ({
-      author: {
-        image: child.author.image,
-      },
-      id: child.id,
-    })),
+    children: this.children.map((child) => child.toDTO()),
     community: this.community && {
       id: this.community.id,
       image: this.community.image,

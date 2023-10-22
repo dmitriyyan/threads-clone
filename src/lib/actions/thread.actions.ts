@@ -122,15 +122,15 @@ export const deleteThread = async (id: string, path: string) => {
   // Extract the authorIds and communityIds to update User and Community models respectively
   const uniqueAuthorIds = new Set(
     [
-      ...descendantThreads.map((thread) => thread.author?.id?.toString()), // Use optional chaining to handle possible undefined values
-      mainThread.author?.id?.toString(),
+      ...descendantThreads.map((thread) => thread.author?._id?.toString()), // Use optional chaining to handle possible undefined values
+      mainThread.author?._id?.toString(),
     ].filter(Boolean),
   );
 
   const uniqueCommunityIds = new Set(
     [
-      ...descendantThreads.map((thread) => thread.community?.id?.toString()), // Use optional chaining to handle possible undefined values
-      mainThread.community?.id?.toString(),
+      ...descendantThreads.map((thread) => thread.community?._id?.toString()), // Use optional chaining to handle possible undefined values
+      mainThread.community?._id?.toString(),
     ].filter(Boolean),
   );
 
@@ -190,7 +190,11 @@ export const fetchThreadById = async (threadId: string) => {
     })
     .exec();
 
-  return thread;
+  if (thread) {
+    return thread.toDTO();
+  }
+
+  return null;
 };
 
 export const addCommentToThread = async (

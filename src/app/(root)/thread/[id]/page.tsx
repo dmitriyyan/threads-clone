@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ThreadCard } from '@/components/cards/ThreadCard';
 import { Comment } from '@/components/forms/Comment';
 import { fetchThreadById } from '@/lib/actions/thread.actions';
@@ -25,17 +23,13 @@ const Page = async ({ params }: { params: { id: string } }) => {
     <section className="relative">
       <div>
         <ThreadCard
-          /* @ts-expect-error */
           author={thread.author}
-          /* @ts-expect-error */
           comments={thread.children}
-          /* @ts-expect-error */
           community={thread.community}
-          content={thread.text}
-          /* @ts-expect-error */
+          content={thread.content}
           createdAt={thread.createdAt}
           currentUserId={user.id}
-          id={thread._id.toString()}
+          id={thread.id}
           parentId={thread.parentId || ''}
         />
       </div>
@@ -49,17 +43,17 @@ const Page = async ({ params }: { params: { id: string } }) => {
       </div>
 
       <div className="mt-10">
-        {thread.children.map((childItem: any) => (
+        {thread.children.map((childItem) => (
           <ThreadCard
             author={childItem.author}
             comments={childItem.children}
             community={childItem.community}
-            content={childItem.text}
+            content={childItem.content}
             createdAt={childItem.createdAt}
             currentUserId={user.id}
-            id={childItem._id}
+            id={childItem.id}
             isComment
-            key={childItem._id}
+            key={childItem.id}
             parentId={childItem.parentId}
           />
         ))}

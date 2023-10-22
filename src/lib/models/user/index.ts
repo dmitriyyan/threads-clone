@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export type UserType = {
+  _id: mongoose.Types.ObjectId;
   bio?: string;
   communities: mongoose.Types.ObjectId[];
   id: string;

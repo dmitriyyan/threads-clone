@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export type CommunityType = {
+  _id: mongoose.Types.ObjectId;
   bio?: string;
   createdBy: mongoose.Types.ObjectId;
   id: string;
