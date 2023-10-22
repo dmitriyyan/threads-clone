@@ -44,7 +44,7 @@ export const fetchPosts = async (pageNumber = 1, pageSize = 20) => {
 
   const isNext = totalPostsCount > skipAmount + posts.length;
 
-  return { isNext, posts };
+  return { isNext, posts: posts.map((post) => post.toDTO()) };
 };
 
 type Parameters = {
@@ -122,15 +122,15 @@ export const deleteThread = async (id: string, path: string) => {
   // Extract the authorIds and communityIds to update User and Community models respectively
   const uniqueAuthorIds = new Set(
     [
-      ...descendantThreads.map((thread) => thread.author?._id?.toString()), // Use optional chaining to handle possible undefined values
-      mainThread.author?._id?.toString(),
+      ...descendantThreads.map((thread) => thread.author?.id?.toString()), // Use optional chaining to handle possible undefined values
+      mainThread.author?.id?.toString(),
     ].filter(Boolean),
   );
 
   const uniqueCommunityIds = new Set(
     [
-      ...descendantThreads.map((thread) => thread.community?._id?.toString()), // Use optional chaining to handle possible undefined values
-      mainThread.community?._id?.toString(),
+      ...descendantThreads.map((thread) => thread.community?.id?.toString()), // Use optional chaining to handle possible undefined values
+      mainThread.community?.id?.toString(),
     ].filter(Boolean),
   );
 
@@ -219,7 +219,7 @@ export const addCommentToThread = async (
   const savedCommentThread = await commentThread.save();
 
   // Add the comment thread's ID to the original thread's children array
-  originalThread.children.push(savedCommentThread._id);
+  originalThread.children.push(savedCommentThread.id);
 
   // Save the updated original thread to the database
   await originalThread.save();

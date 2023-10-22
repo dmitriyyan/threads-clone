@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-type CommunityType = {
+export type CommunityType = {
   bio?: string;
   createdBy: mongoose.Types.ObjectId;
   id: string;

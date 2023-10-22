@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ThreadCard } from '@/components/cards/ThreadCard';
 import { Pagination } from '@/components/shared/Pagination';
 import { fetchPosts } from '@/lib/actions/thread.actions';
@@ -33,18 +32,14 @@ const Page = async ({
           <>
             {result.posts.map((post) => (
               <ThreadCard
-                /* @ts-expect-error */
                 author={post.author}
-                /* @ts-expect-error */
                 comments={post.children}
-                /* @ts-expect-error */
                 community={post.community}
-                content={post.text}
-                /* @ts-expect-error */
+                content={post.content}
                 createdAt={post.createdAt}
                 currentUserId={user.id}
-                id={post._id.toString()}
-                key={post._id.toString()}
+                id={post.id}
+                key={post.id}
                 parentId={post.parentId || ''}
               />
             ))}

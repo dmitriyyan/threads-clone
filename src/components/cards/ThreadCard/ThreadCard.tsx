@@ -6,20 +6,20 @@ import Link from 'next/link';
 type Props = {
   readonly author: {
     id: string;
-    image: string;
+    image?: string;
     name: string;
   };
   readonly comments: Array<{
-    _id: string;
     author: {
-      image: string;
+      image?: string;
     };
-  }>;
-  readonly community: {
     id: string;
-    image: string;
+  }>;
+  readonly community?: {
+    id: string;
+    image?: string;
     name: string;
-  } | null;
+  };
   readonly content: string;
   readonly createdAt: string;
   readonly currentUserId: string;
@@ -56,7 +56,7 @@ const ThreadCard = ({
                 alt="user_community_image"
                 className="cursor-pointer rounded-full"
                 fill
-                src={author.image}
+                src={author.image || ''}
               />
             </Link>
 
@@ -133,11 +133,11 @@ const ThreadCard = ({
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
             <Image
-              alt={`user_${comment._id}`}
+              alt={`user_${comment.id}`}
               className={`${index !== 0 && '-ml-5'} rounded-full object-cover`}
               height={24}
-              key={comment._id}
-              src={comment.author.image}
+              key={comment.id}
+              src={comment.author.image || ''}
               width={24}
             />
           ))}
@@ -164,7 +164,7 @@ const ThreadCard = ({
             alt={community.name}
             className="ml-1 rounded-full object-cover"
             height={14}
-            src={community.image}
+            src={community.image || ''}
             width={14}
           />
         </Link>
