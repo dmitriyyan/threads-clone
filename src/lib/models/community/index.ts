@@ -1,6 +1,17 @@
 import mongoose from 'mongoose';
 
-const communitySchema = new mongoose.Schema({
+type CommunityType = {
+  bio?: string;
+  createdBy: mongoose.Types.ObjectId;
+  id: string;
+  image?: string;
+  members: mongoose.Types.ObjectId[];
+  name: string;
+  threads: mongoose.Types.ObjectId[];
+  username: string;
+};
+
+const communitySchema = new mongoose.Schema<CommunityType>({
   bio: String,
   createdBy: {
     ref: 'User',
@@ -34,7 +45,6 @@ const communitySchema = new mongoose.Schema({
   },
 });
 
-const Community =
-  mongoose.models.Community || mongoose.model('Community', communitySchema);
+const Community = mongoose.model<CommunityType>('Community', communitySchema);
 
 export default Community;
