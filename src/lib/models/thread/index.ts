@@ -38,6 +38,8 @@ const threadSchema = new mongoose.Schema<ThreadType>({
   },
 });
 
-const Thread = mongoose.model<ThreadType>('Thread', threadSchema);
+const Thread = mongoose.models.Thread
+  ? mongoose.model<ThreadType>('Thread')
+  : mongoose.model<ThreadType>('Thread', threadSchema);
 
 export default Thread;

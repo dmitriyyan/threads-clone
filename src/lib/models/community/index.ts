@@ -44,7 +44,8 @@ const communitySchema = new mongoose.Schema<CommunityType>({
     unique: true,
   },
 });
-
-const Community = mongoose.model<CommunityType>('Community', communitySchema);
+const Community = mongoose.models.Community
+  ? mongoose.model<CommunityType>('Community')
+  : mongoose.model<CommunityType>('Community', communitySchema);
 
 export default Community;
