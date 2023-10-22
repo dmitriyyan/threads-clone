@@ -1,6 +1,17 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+type UserType = {
+  bio?: string;
+  communities: mongoose.Types.ObjectId[];
+  id: string;
+  image?: string;
+  name: string;
+  onboarded?: boolean;
+  threads: mongoose.Types.ObjectId[];
+  username: string;
+};
+
+const userSchema = new mongoose.Schema<UserType>({
   bio: String,
   communities: [
     {
@@ -34,6 +45,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.model<UserType>('User', userSchema);
 
 export default User;

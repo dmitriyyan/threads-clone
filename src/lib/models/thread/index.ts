@@ -1,6 +1,15 @@
 import mongoose from 'mongoose';
 
-const threadSchema = new mongoose.Schema({
+export type ThreadType = {
+  author: mongoose.Types.ObjectId;
+  children: mongoose.Types.ObjectId[];
+  community?: mongoose.Types.ObjectId;
+  createdAt: Date;
+  parentId?: string;
+  text: string;
+};
+
+const threadSchema = new mongoose.Schema<ThreadType>({
   author: {
     ref: 'User',
     required: true,
@@ -29,6 +38,6 @@ const threadSchema = new mongoose.Schema({
   },
 });
 
-const Thread = mongoose.models.Thread || mongoose.model('Thread', threadSchema);
+const Thread = mongoose.model<ThreadType>('Thread', threadSchema);
 
 export default Thread;
