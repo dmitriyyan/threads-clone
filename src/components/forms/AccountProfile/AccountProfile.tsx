@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/Form';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
-// import { updateUser } from '@/lib/actions/user.actions';
+import { updateUser } from '@/lib/actions/user.actions';
 import { useUploadThing } from '@/lib/uploadthing';
 import { isBaseImage } from '@/lib/utils';
 import { UserValidation } from '@/lib/validations/user';
@@ -64,14 +64,14 @@ const AccountProfile = ({ btnTitle, user }: Props) => {
       }
     }
 
-    // await updateUser({
-    //   bio: values.bio,
-    //   image: profilePhoto,
-    //   name: values.name,
-    //   path: pathname,
-    //   userId: user.id,
-    //   username: values.username,
-    // });
+    await updateUser({
+      bio: values.bio,
+      image: profilePhoto,
+      name: values.name,
+      path: pathname,
+      userId: user.id,
+      username: values.username,
+    });
 
     if (pathname === '/profile/edit') {
       router.back();
