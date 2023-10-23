@@ -15,7 +15,7 @@ const Page = async () => {
     <>
       <h1 className="head-text">Create Thread</h1>
 
-      <PostThread userId={userInfo._id.toString()} />
+      <PostThread userId={userInfo.mongo_id.toString()} />
     </>
   );
 };

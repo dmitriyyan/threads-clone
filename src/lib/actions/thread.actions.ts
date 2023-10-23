@@ -1,9 +1,9 @@
 'use server';
 
-import Community from '../models/community';
-import Thread from '../models/thread';
-import User from '../models/user';
-import { connectToDB } from '../mongoose';
+// import Community from '../models/community';
+// import Thread from '../models/thread';
+// import User from '../models/user';
+// import { connectToDB } from '../mongoose';
 import { revalidatePath } from 'next/cache';
 
 export const fetchPosts = async (pageNumber = 1, pageSize = 20) => {

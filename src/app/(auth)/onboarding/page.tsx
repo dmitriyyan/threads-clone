@@ -15,7 +15,7 @@ const Page = async () => {
     id: user.id,
     image: userInfo?.image ?? user.imageUrl,
     name: userInfo?.name ?? user.firstName ?? '',
-    objectId: userInfo?._id.toString() ?? '',
+    objectId: userInfo?.mongo_id.toString() ?? '',
     username: userInfo?.username ?? user.username ?? '',
   };
 

@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URL")
+}
+
+model User {
+  mongo_id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  bio       String?
+  image     String?
+  id        String  @unique
+  username  String  @unique
+  name      String
+  onboarded Boolean @default(false)
+
+  threads             Thread[]
+  communityIDs        String[]    @db.ObjectId
+  communities         Community[] @relation(fields: [communityIDs], references: [mongo_id])
+  createdCommunityIDs String[]    @db.ObjectId
+  createdCommunites   Community[] @relation("createdCommunities")
+}
+
+model Thread {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime? @default(now())
+  text      String
+
+  authorId    String     @db.ObjectId
+  author      User       @relation(fields: [authorId], references: [mongo_id])
+  communityId String?    @db.ObjectId
+  community   Community? @relation(fields: [communityId], references: [mongo_id])
+  parentId    String?    @db.ObjectId
+  parent      Thread?    @relation("threadChildren", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children    Thread[]   @relation("threadChildren")
+}
+
+model Community {
+  mongo_id String  @id @default(auto()) @map("_id") @db.ObjectId
+  id       String
+  bio      String?
+  image    String?
+  name     String
+  username String  @unique
+
+  memberIDs   String[] @db.ObjectId
+  members     User[]   @relation(fields: [memberIDs], references: [mongo_id])
+  threads     Thread[]
+  createdById String   @db.ObjectId
+  createdBy   User     @relation("createdCommunities", fields: [createdById], references: [mongo_id])
+}
